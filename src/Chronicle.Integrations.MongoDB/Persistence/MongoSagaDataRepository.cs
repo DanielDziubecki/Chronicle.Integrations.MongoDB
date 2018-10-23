@@ -18,12 +18,15 @@ namespace Chronicle.Integrations.MongoDB.Persistence
                 .FirstOrDefaultAsync();
 
         public async Task WriteAsync(ISagaData sagaData)
-            => await _collection.InsertOneAsync(new MongoSagaData
+        {
+            await _collection.DeleteOneAsync(sld => sld.SagaId == sagaData.SagaId && sld.SagaType == sagaData.SagaType.FullName);
+            await _collection.InsertOneAsync(new MongoSagaData
             {
                 SagaId = sagaData.SagaId,
                 SagaType = sagaData.SagaType.FullName,
                 State = sagaData.State,
                 Data = sagaData.Data
             });
+        }
     }
 }

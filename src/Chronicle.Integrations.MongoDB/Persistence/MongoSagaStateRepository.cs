@@ -4,12 +4,12 @@ using MongoDB.Driver;
 
 namespace Chronicle.Integrations.MongoDB.Persistence
 {
-    public class MongoSagaDataRepository : ISagaStateRepository
+    internal class MongoSagaStateRepository : ISagaStateRepository
     {
         private const string CollectionName = "SagaData";
         private readonly IMongoCollection<MongoSagaState> _collection;
 
-        public MongoSagaDataRepository(IMongoDatabase database)
+        public MongoSagaStateRepository(IMongoDatabase database)
             => _collection = database.GetCollection<MongoSagaState>(CollectionName);
 
         public async Task<ISagaState> ReadAsync(Guid sagaId, Type sagaType)

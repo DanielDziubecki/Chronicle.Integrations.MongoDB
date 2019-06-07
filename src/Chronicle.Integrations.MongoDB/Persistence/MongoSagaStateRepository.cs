@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace Chronicle.Integrations.MongoDB.Persistence
 {
-    internal class MongoSagaStateRepository : ISagaStateRepository
+    internal sealed class MongoSagaStateRepository : ISagaStateRepository
     {
         private const string CollectionName = "SagaData";
         private readonly IMongoCollection<MongoSagaState> _collection;
@@ -26,7 +26,7 @@ namespace Chronicle.Integrations.MongoDB.Persistence
                     SagaType = sagaState.Type.FullName,
                     State = sagaState.State,
                     Data = sagaState.Data
-                });
+                }, new UpdateOptions { IsUpsert = true });
         }
     }
 }

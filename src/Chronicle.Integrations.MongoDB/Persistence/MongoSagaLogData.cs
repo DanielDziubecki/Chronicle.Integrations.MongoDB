@@ -10,6 +10,6 @@ namespace Chronicle.Integrations.MongoDB.Persistence
         public long CreatedAt { get; set; }
         public object Message { get; set; }
 
-        Type ISagaLogData.SagaType => Type.GetType(SagaType);
+        Type ISagaLogData.Type => Type.GetType(SagaType);
     }
 }

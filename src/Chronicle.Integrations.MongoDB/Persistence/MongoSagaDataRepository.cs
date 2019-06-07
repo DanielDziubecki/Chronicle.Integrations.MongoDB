@@ -4,28 +4,28 @@ using MongoDB.Driver;
 
 namespace Chronicle.Integrations.MongoDB.Persistence
 {
-    public class MongoSagaDataRepository : ISagaDataRepository
+    public class MongoSagaDataRepository : ISagaStateRepository
     {
         private const string CollectionName = "SagaData";
-        private readonly IMongoCollection<MongoSagaData> _collection;
+        private readonly IMongoCollection<MongoSagaState> _collection;
 
         public MongoSagaDataRepository(IMongoDatabase database)
-            => _collection = database.GetCollection<MongoSagaData>(CollectionName);
+            => _collection = database.GetCollection<MongoSagaState>(CollectionName);
 
-        public async Task<ISagaData> ReadAsync(Guid sagaId, Type sagaType)
+        public async Task<ISagaState> ReadAsync(Guid sagaId, Type sagaType)
             => await _collection
                 .Find(sld => sld.SagaId == sagaId && sld.SagaType == sagaType.FullName)
                 .FirstOrDefaultAsync();
 
-        public async Task WriteAsync(ISagaData sagaData)
+        public async Task WriteAsync(ISagaState sagaState)
         {
-            await _collection.ReplaceOneAsync(sld => sld.SagaId == sagaData.SagaId && sld.SagaType == sagaData.SagaType.FullName,
-                new MongoSagaData
+            await _collection.ReplaceOneAsync(sld => sld.SagaId == sagaState.Id && sld.SagaType == sagaState.Type.FullName,
+                new MongoSagaState
                 {
-                    SagaId = sagaData.SagaId,
-                    SagaType = sagaData.SagaType.FullName,
-                    State = sagaData.State,
-                    Data = sagaData.Data
+                    SagaId = sagaState.Id,
+                    SagaType = sagaState.Type.FullName,
+                    State = sagaState.State,
+                    Data = sagaState.Data
                 });
         }
     }

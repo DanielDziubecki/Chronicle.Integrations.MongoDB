@@ -19,14 +19,14 @@ namespace Chronicle.Integrations.MongoDB.Persistence
 
         public async Task WriteAsync(ISagaState sagaState)
         {
-            await _collection.ReplaceOneAsync(sld => sld.SagaId == sagaState.Id && sld.SagaType == sagaState.Type.FullName,
-                new MongoSagaState
-                {
-                    SagaId = sagaState.Id,
-                    SagaType = sagaState.Type.FullName,
-                    State = sagaState.State,
-                    Data = sagaState.Data
-                }, new UpdateOptions { IsUpsert = true });
+            await _collection.DeleteOneAsync(sld => sld.SagaId == sagaState.Id && sld.SagaType == sagaState.Type.FullName);
+            await _collection.InsertOneAsync(new MongoSagaState
+            {
+                SagaId = sagaState.Id,
+                SagaType = sagaState.Type.FullName,
+                State = sagaState.State,
+                Data = sagaState.Data
+            });
         }
     }
 }

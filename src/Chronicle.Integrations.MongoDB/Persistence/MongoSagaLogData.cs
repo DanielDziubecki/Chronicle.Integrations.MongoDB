@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 namespace Chronicle.Integrations.MongoDB.Persistence
 {
@@ -9,7 +10,6 @@ namespace Chronicle.Integrations.MongoDB.Persistence
         public string SagaType { get; set; }
         public long CreatedAt { get; set; }
         public object Message { get; set; }
-
-        Type ISagaLogData.Type => Type.GetType(SagaType);
+        Type ISagaLogData.Type => Assembly.GetEntryAssembly()?.GetType(SagaType);
     }
 }

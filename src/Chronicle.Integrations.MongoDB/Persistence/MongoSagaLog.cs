@@ -14,17 +14,17 @@ namespace Chronicle.Integrations.MongoDB.Persistence
             => _collection = database.GetCollection<MongoSagaLogData>(CollectionName);
 
         public async Task<IEnumerable<ISagaLogData>> ReadAsync(SagaId id, Type type)
-            => await _collection
-                .Find(sld => sld.Id == id && sld.SagaType == type.FullName)
-                .ToListAsync();
+           => await _collection
+               .Find(sld => sld.SagaId == id.Id && sld.SagaType == type.FullName)
+               .ToListAsync();
 
         public async Task WriteAsync(ISagaLogData message)
-            => await _collection.InsertOneAsync(new MongoSagaLogData
-            {
-                Id = message.Id,
-                SagaType = message.Type.FullName,
-                Message = message.Message,
-                CreatedAt = message.CreatedAt
-            });
+           => await _collection.InsertOneAsync(new MongoSagaLogData
+           {
+               SagaId = message.Id,
+               SagaType = message.Type.FullName,
+               Message = message.Message,
+               CreatedAt = message.CreatedAt
+           });
     }
 }

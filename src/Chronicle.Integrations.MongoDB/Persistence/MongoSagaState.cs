@@ -1,11 +1,17 @@
 using System;
 using System.Reflection;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Chronicle.Integrations.MongoDB.Persistence
 {
     internal class MongoSagaState : ISagaState
     {
-        public SagaId Id { get; set; }
+        [BsonId]
+        [BsonElement("Id")]
+        public string MongoId { get; set; }
+        [BsonIgnore]
+        public SagaId Id => MongoId;
+
         public string SagaType { get; set; }
         public SagaStates State { get; set; }
         public object Data { get; set; }
@@ -16,7 +22,5 @@ namespace Chronicle.Integrations.MongoDB.Persistence
             State = state;
             Data = data;
         }
-
- 
     }
 }

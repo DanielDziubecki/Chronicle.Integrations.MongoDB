@@ -45,7 +45,7 @@ namespace Chronicle.Integrations.MongoDB
         {
             builder.Services.AddTransient(getDatabase);
             builder.UseSagaLog<MongoSagaLog>();
-            builder.UseSagaDataRepository<MongoSagaStateRepository>();
+            builder.UseSagaStateRepository<MongoSagaStateRepository>();
 
             return builder;
         }

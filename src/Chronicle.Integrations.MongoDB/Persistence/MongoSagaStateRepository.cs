@@ -12,17 +12,17 @@ namespace Chronicle.Integrations.MongoDB.Persistence
         public MongoSagaStateRepository(IMongoDatabase database)
             => _collection = database.GetCollection<MongoSagaState>(CollectionName);
 
-        public async Task<ISagaState> ReadAsync(Guid sagaId, Type sagaType)
-            => await _collection
-                .Find(sld => sld.SagaId == sagaId && sld.SagaType == sagaType.FullName)
-                .FirstOrDefaultAsync();
+        public async Task<ISagaState> ReadAsync(SagaId id, Type type)
+        => await _collection
+            .Find(sld => sld.Id == id && sld.SagaType == type.FullName)
+            .FirstOrDefaultAsync();
 
         public async Task WriteAsync(ISagaState sagaState)
         {
-            await _collection.DeleteOneAsync(sld => sld.SagaId == sagaState.Id && sld.SagaType == sagaState.Type.FullName);
+            await _collection.DeleteOneAsync(sld => sld.Id == sagaState.Id && sld.SagaType == sagaState.Type.FullName);
             await _collection.InsertOneAsync(new MongoSagaState
             {
-                SagaId = sagaState.Id,
+                Id = sagaState.Id,
                 SagaType = sagaState.Type.FullName,
                 State = sagaState.State,
                 Data = sagaState.Data

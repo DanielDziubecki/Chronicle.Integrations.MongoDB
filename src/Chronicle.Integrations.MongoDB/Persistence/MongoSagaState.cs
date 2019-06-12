@@ -5,8 +5,7 @@ namespace Chronicle.Integrations.MongoDB.Persistence
 {
     internal class MongoSagaState : ISagaState
     {
-        public Guid Id { get; set; }
-        public Guid SagaId { get; set; }
+        public SagaId Id { get; set; }
         public string SagaType { get; set; }
         public SagaStates State { get; set; }
         public object Data { get; set; }
@@ -17,5 +16,7 @@ namespace Chronicle.Integrations.MongoDB.Persistence
             State = state;
             Data = data;
         }
+
+ 
     }
 }

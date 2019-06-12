@@ -11,14 +11,14 @@
     <PackageProjectUrl>https://github.com/chronicle-stack/Chronicle.Integrations.MongoDB</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/chronicle-stack/Chronicle/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://avatars1.githubusercontent.com/u/42150754?s=200</PackageIconUrl>
-    <VersionPrefix>1.1.1</VersionPrefix>
-    <Version>1.1.1</Version>
-    <AssemblyVersion>1.1.1.0</AssemblyVersion>
-    <FileVersion>1.1.1.0</FileVersion>
+    <VersionPrefix>2.0</VersionPrefix>
+    <Version>2.0</Version>
+    <AssemblyVersion>2.0</AssemblyVersion>
+    <FileVersion>2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chronicle_" Version="1.8.0" />
+    <PackageReference Include="Chronicle_" Version="2.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0-preview3-35497" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
   </ItemGroup>
